@@ -3,9 +3,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 const router = require('./router/index.js')
 const errorHandler = require('./middleware/error-handler.js')
-
+require('./model/index.js')
 const app = express()
-
 // 日志输出
 app.use(morgan('dev'))
 
@@ -17,7 +16,6 @@ app.use(express.urlencoded())
 app.use(cors())
 
 const PORT = process.env.PORT || 3000
-
 // 挂载路由
 app.use('/api', router)
 
