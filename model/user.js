@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         set: (value) => md5(value),
-        select: true // 指定该字段在查询出的数据中是否显示，true表示查询数据过滤该字段
+        select: false // 指定该字段在查询出的数据中是否显示，false表示不查询该字段
 
     },
     // 个人介绍
