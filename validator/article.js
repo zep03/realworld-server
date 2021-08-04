@@ -40,7 +40,7 @@ exports.updateArticle = [
     async (req, res, next) => {
         if(req.user._id.toString() !== req.article.author.toString()) {
             return res.status(403).json({
-                errors: '你不是文章的作者，没有更新文章操作权限'
+                errors: '你不是文章的作者，没有更新、删除文章的操作权限'
             })
         }
         next()
@@ -50,3 +50,6 @@ exports.updateArticle = [
 
 // 校验文章是否存在
 // 修改的文章的作者是否是当前登录的用户
+
+
+exports.deleteArticle = exports.updateArticle
