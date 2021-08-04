@@ -18,7 +18,7 @@ router.get('/articles/:articleId', articleValidator.getArticle ,articleControlle
 router.post('/articles', auth, articleValidator.createArticle, articleController.createArticle)
 
 // 更新文章
-router.put('/articles/:articleId', articleController.updateArticle)
+router.put('/articles/:articleId', auth, articleValidator.updateArticle, articleController.updateArticle)
 
 // 删除文章
 router.delete('/articles/:articleId', articleController.deleteArticle)

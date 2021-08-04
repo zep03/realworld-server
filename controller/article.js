@@ -77,7 +77,17 @@ exports.createArticle =  async (req, res, next) => {
 exports.updateArticle =  async (req, res, next) => {
     try {
         // 处理请求
-        res.send('put /articles/:slug 更新文章')
+        // 数据库中查询出来的文章（修改前的文章）
+        const article = req.article
+        // 请求体中的文章数据
+        const bodyArticle = req.body.article
+        article.title = bodyArticle.title || article.title
+        article.description = bodyArticle.description || article.description
+        article.body = bodyArticle.body || article.body
+        await article.save()
+        res.status(200).json({
+            article: article
+        })
     } catch (err) {
         next(err)
     }
