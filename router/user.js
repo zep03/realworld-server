@@ -1,6 +1,7 @@
 const express = require('express')
 const userController = require('../controller/user.js')
 const userValidator = require('../validator/user.js')
+const auth = require('../middleware/auth.js')
 
 const router = express.Router()
 
@@ -20,10 +21,10 @@ router.post('/users', userValidator.register,
     userController.register) // 3.通过验证，执行具体的控制器处理
 
 // 获取当前登录用户
-router.get('/user', userController.getCurrentUser)
+router.get('/user', auth, userController.getCurrentUser)
 
 // 更新当前登录的用户资料
-router.put('/user', userController.updateCurrentUser)
+router.put('/user', auth, userController.updateCurrentUser)
 
 
 module.exports = router

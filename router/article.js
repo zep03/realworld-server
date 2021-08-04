@@ -1,5 +1,7 @@
 const express = require('express')
 const articleController = require('../controller/article.js')
+const auth = require('../middleware/auth.js')
+
 const router = express.Router()
 
 // 获取文章列表
@@ -12,7 +14,7 @@ router.get('/articles/feed', articleController.getFeedArticles)
 router.get('/articles/:slug', articleController.getArticle)
 
 // 创建文章
-router.post('/articles',articleController.createArticle)
+router.post('/articles', auth, articleController.createArticle)
 
 // 更新文章
 router.put('/articles/:slug', articleController.updateArticle)
