@@ -24,7 +24,7 @@ router.put('/articles/:articleId', auth, articleValidator.updateArticle, article
 router.delete('/articles/:articleId', auth, articleValidator.deleteArticle, articleController.deleteArticle)
 
 // 为文章添加评论
-router.post('/articles/:articleId/comments', articleController.addComments)
+router.post('/articles/:articleId/comments', auth, articleValidator.addComment, articleController.addComments)
 
 // 从文章中获取评论
 router.get('/articles/:articleId/comments', articleController.getComments)

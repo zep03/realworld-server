@@ -1,4 +1,4 @@
-const { Article, User } = require("../model")
+const { Article, User, Comment } = require("../model")
 
 // 获取文章列表
 exports.getArticles =  async (req, res, next) => {
@@ -109,7 +109,13 @@ exports.deleteArticle =  async (req, res, next) => {
 exports.addComments =  async (req, res, next) => {
     try {
         // 处理请求
-        res.send('post /articles/:slug/comments 为文章添加评论')
+        const comment = new Comment(req.body.comment)
+        comment.author = req.user._id
+        comment.populate('author').execPopulate()
+        await comment.save()
+        res.status(201).json({
+            comment: comment
+        })
     } catch (err) {
         next(err)
     }

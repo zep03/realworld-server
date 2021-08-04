@@ -1,7 +1,7 @@
 const { body, param } = require('express-validator')
 const validate = require('../middleware/validate.js')
 const mongoose = require('mongoose')
-const { Article } = require('../model/index.js')
+const { Article, Comment } = require('../model/index.js')
 
 exports.createArticle = validate([
     body('article.title').notEmpty().withMessage('文章标题不能为空'),
@@ -45,11 +45,24 @@ exports.updateArticle = [
         }
         next()
     }
-
 ]
-
 // 校验文章是否存在
 // 修改的文章的作者是否是当前登录的用户
-
-
 exports.deleteArticle = exports.updateArticle
+
+exports.addComment = [
+    validate([
+        validate.isValidObjectId(['params'], 'articleId')
+    ]),
+    async (req, res, next) => {
+        const articleId = req.params.articleId
+        const article = await Article.findById(articleId)
+        req.article = article
+        if(!article) {
+            return res.status(404).json({
+                errors: '文章ID错误，不存在该文章'
+            })
+        }
+        next()
+    }
+]
